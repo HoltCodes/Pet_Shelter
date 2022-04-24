@@ -1,5 +1,4 @@
 const PetController = require("../controllers/pet.controller");
-const Pet = require("../models/pet.model");
 
 module.exports = (app) => {
 
