@@ -1,4 +1,4 @@
-const Pet = require("../models.pet.model.js");
+const Pet = require("../models/pet.model.js");
 
 
 module.exports = {
