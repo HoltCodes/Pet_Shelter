@@ -10,8 +10,8 @@ module.exports = {
   },
 
   getOnePet: (req, res) => {
-    Pet.findONe({ _id: req.params.id })
-    .then((onePet) => res.json(OnePet))
+    Pet.findOne({ _id: req.params.id })
+    .then((onePet) => res.json(onePet))
     .catch((err) => console.log(err));
   },
 
@@ -22,7 +22,7 @@ module.exports = {
   },
 
   updatePet: (req, res) => {
-    Pet.findbyIdAndUpdate({ _id: req.params.id }, req.body, {
+    Pet.findByIdAndUpdate({ _id: req.params.id }, req.body, {
       new: true,
       runValidators: true,
     })
@@ -35,5 +35,5 @@ module.exports = {
       .then((deleteId) => res.json(deleteId))
       .catch((err) => console(err));
   },
-  
+
 };
