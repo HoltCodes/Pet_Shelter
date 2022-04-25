@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const PetForm = () => {
   const[ name, setName ] = useState("");
@@ -9,8 +9,9 @@ const PetForm = () => {
   const[ skill1, setSkill1 ] = useState("");
   const[ skill2, setSkill2 ] = useState("");
   const[ skill3, setSkill3 ] = useState("");
+  const navigate = useNavigate();
   const [ errors, setErrors ] = useState({});
-  const newSubmitHandler = (e) => {
+  const handleAddPet = (e) => {
     e.preventDefault();
     console.log({
       name,
@@ -27,10 +28,11 @@ const PetForm = () => {
     })
     .then((res) => {
       console.log("success", res);
+      navigate("/");
     })
     .catch((err) => {
       console.log("error", err.res);
-      setErrors(err.res.data.errors);
+      setErrors(err.response.data.errors);
     });
   };
   return (
@@ -41,7 +43,7 @@ const PetForm = () => {
           <div className="row">
           <Link to="/">Back to Home</Link>
           </div>
-          <form onSubmit={ newSubmitHandler }>
+          <form onSubmit={ handleAddPet }>
             <div className="form-group">
             
               <label htmlFor="name">Pet Name:</label>
@@ -104,14 +106,6 @@ const PetForm = () => {
             <button className="btn btn-primary mt-3" type="submit">
              Add Pet
             </button>
-            {errors &&
-            Object.keys(errors).map((errKey, index) => {
-              return (
-                <p style={{ color: "red" }} key={index}>
-                  {errors[errKey].message}
-                </p>
-              );
-            })}
           </form>
         </div>
       </div>

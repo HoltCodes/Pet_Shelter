@@ -10,8 +10,8 @@ function App() {
       <h1>Pet Shelter</h1>
       <BrowserRouter>
         <Routes>
+          <Route path="/add" element={<PetForm/> } /> 
           <Route path="/" element={<PetList/>} />
-          <Route path="/add" element={<PetForm/> } />
           <Route path="/pets/:id" element={<PetPage/> } />
         </Routes>
       </BrowserRouter>

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const PetList = (props) => {
 
-  const [ pets, setPets ] = useState([]);
+  const [ petList, setPetList ] = useState([]);
  
 
   useEffect(() => {
@@ -14,7 +14,7 @@ const PetList = (props) => {
     .then((res) => {
       console.log(res);
       console.log(res.data);
-      setPets(res.data);
+      setPetList(res.data);
     })
     .catch((err) => {
       console.log(err.res);
@@ -32,13 +32,13 @@ const PetList = (props) => {
             <th scope="col">Type</th>
             <th scope="col">Actions</th>
           </tr>
-          {pets.map((pet, index) => {
+          {petList.map((pet, index) => {
             return(
               <tr key={pet._id}>
                 <td>{ pet.name}</td>
                 <td>{ pet.type}</td>
                 <td>
-                  <Link to={`/pets/${pet.id}`}>Details</Link> | <Link to={`/pets/edit/${pet.id}`}>Edit</Link>
+                  <Link to={`/pets/${pet._id}`}>Details</Link> | <Link to={`/pets/edit/${pet._id}`}>Edit</Link>
                 </td>
               </tr>
             );
