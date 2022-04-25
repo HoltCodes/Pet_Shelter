@@ -1,34 +1,36 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const PetForm = (props) => {
+const PetForm = () => {
   const[ name, setName ] = useState("");
   const[ type, setType ] = useState("");
   const[ desc, setDesc ] = useState("");
-  const[ Skill1, setSkill1 ] = useState("");
-  const[ Skill2, setSkill2 ] = useState("");
-  const[ Skill3, setSkill3 ] = useState("");
+  const[ skill1, setSkill1 ] = useState("");
+  const[ skill2, setSkill2 ] = useState("");
+  const[ skill3, setSkill3 ] = useState("");
   const [ errors, setErrors ] = useState({});
-  const navigate = useNavigate();
   const newSubmitHandler = (e) => {
     e.preventDefault();
-    axios
-    .post("http://localhost:8000/api/pets", { 
+    console.log({
       name,
       type,
       desc,
-      Skill1, Skill2, Skill3 })
-    .then(res => {
-      console.log(res);
-      if(res.data.errors) {
-        setErrors(res.data.errors)
-      } else {
-      navigate("/");
-      }
+      skill1, skill2, skill3,
+    });
+    axios
+    .post("http://localhost:8000/api/pets",{
+      name,
+      type,
+      desc,
+      skill1, skill2, skill3,
     })
-    .catch(err => {
-      console.log(err.res);
+    .then((res) => {
+      console.log("success", res);
+    })
+    .catch((err) => {
+      console.log("error", err.res);
+      setErrors(err.res.data.errors);
     });
   };
   return (
@@ -49,7 +51,7 @@ const PetForm = (props) => {
                 className="form-control"
                 onChange={(e) => setName(e.target.value)}
               />
-              {errors.name ? <p>{ errors.name.message }</p> : null}
+              {errors.name && <p style={{ color: "red" }}>{ errors.name.message }</p>}
 
               <label htmlFor="type">Pet Type:</label>
               <input
@@ -58,7 +60,7 @@ const PetForm = (props) => {
                 className="form-control"
                 onChange={(e) => setType(e.target.value)}
               />
-              {errors.type ? <p>{ errors.type.message }</p> : null}
+              {errors.type && <p style={{ color: "red" }}>{ errors.type.message }</p>}
 
               <label htmlFor="desc">Pet Description:</label>
               <input
@@ -67,7 +69,7 @@ const PetForm = (props) => {
                 className="form-control"
                 onChange={(e) => setDesc(e.target.value)}
               />
-              {errors.desc ? <p>{ errors.desc.message }</p> : null}
+              {errors.desc && <p style={{ color: "red" }}>{ errors.desc.message }</p>}
 
               <h3>Skills (optional):</h3>
 
@@ -78,7 +80,7 @@ const PetForm = (props) => {
                 className="form-control"
                 onChange={(e) => setSkill1(e.target.value)}
               />
-              {errors.skill1 ? <p>{ errors.skill1.message }</p> : null}
+
 
               <label htmlFor="skill2">Skill 2</label>
               <input
@@ -87,7 +89,7 @@ const PetForm = (props) => {
                 className="form-control"
                 onChange={(e) => setSkill2(e.target.value)}
               />
-              {errors.skill2 ? <p>{ errors.skill2.message }</p> : null}
+
 
               <label htmlFor="skill3">Skill 3</label>
               <input
@@ -96,12 +98,20 @@ const PetForm = (props) => {
                 className="form-control"
                 onChange={(e) => setSkill3(e.target.value)}
               />
-              {errors.skill3 ? <p>{ errors.skill3.message }</p> : null}
+
 
             </div>
             <button className="btn btn-primary mt-3" type="submit">
              Add Pet
             </button>
+            {errors &&
+            Object.keys(errors).map((errKey, index) => {
+              return (
+                <p style={{ color: "red" }} key={index}>
+                  {errors[errKey].message}
+                </p>
+              );
+            })}
           </form>
         </div>
       </div>
