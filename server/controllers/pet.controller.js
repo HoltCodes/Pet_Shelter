@@ -30,6 +30,12 @@ module.exports = {
     .catch((err) => console.log(err));
   },
 
+  likePet: (req, res) => {
+    Pet.findOneAndUpdate( { _id: req.params.id }, { $inc: { likes: 1 } })
+    .then(() => res.json({ message: "Pet Liked"}))
+    .catch((err) => console.log(err));
+  },
+
   deletePet: (req, res) => {
     Pet.deleteOne({ _id: req, res})
       .then((deleteId) => res.json(deleteId))

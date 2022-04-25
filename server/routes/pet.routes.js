@@ -8,7 +8,9 @@ module.exports = (app) => {
 
   app.get("/api/pets", PetController.getAllPets);
 
-  app.put("/api/product/:id", PetController.updatePet);
+  app.put("/api/pets/:id", PetController.updatePet);
+
+  app.put("/api/like/:id", PetController.likePet);
 
   app.delete("/api/pets/:id", PetController.deletePet);
 
